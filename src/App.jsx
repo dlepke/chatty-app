@@ -14,19 +14,26 @@ class NavBar extends Component {
       </div>
     );
   }
-}
+};
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { currentUser: 'Anonymous' };
+  }
+  
+
   render() {
     console.log("Rendering <App/>");
     return (
       <div>
         <NavBar />
         <MessageList />
-        <ChatBar />
+        <ChatBar currentUser={ this.state.currentUser } />
       </div>
     );
   }
 }
 export default App;
+
