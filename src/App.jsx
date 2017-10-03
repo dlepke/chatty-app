@@ -36,7 +36,8 @@ class App extends Component {
                       user: 'Anonymous1',
                       content: "I want to download food."
                     }] 
-                };
+    };
+    this.socket = new WebSocket("ws://localhost:3001");
   }
 
   addNewMessage(user, content) {
@@ -55,6 +56,10 @@ class App extends Component {
       console.log("Simulating incoming message");
       this.addNewMessage('Michelle', "Hello there!");
     }, 3000);
+    this.socket.onopen = () => {
+      console.log("Connected to server");
+      this.socket.send( this.state.messages );
+    }
   }
 
   render() {
