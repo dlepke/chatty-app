@@ -43,7 +43,6 @@ class App extends Component {
       messageArray.push(newMessageFromServer);
       this.setState({messages: messageArray});
       console.log(this.state.messages);
-      console.log("state set with new message");
     }
   }
 
