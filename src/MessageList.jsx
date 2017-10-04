@@ -9,6 +9,7 @@ class MessageList extends Component {
         key={ message.id }
         user={ message.user }
         content={ message.content }
+        type={ message.type }
       />
     })
     console.log("Rendering <MessageList />");

@@ -2,32 +2,29 @@ import React, {Component} from 'react';
 
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
-
-class NavBar extends Component {
-  render() {
-    console.log("Rendering <NavBar />");
-    return (
-      <div className = "navbar">
-        <nav>
-        <span className="header"><h1 className="navbar-brand">Chatty</h1></span>
-        </nav>
-      </div>
-    );
-  }
-};
+import NavBar from './NavBar.jsx';
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {  currentUser: 'Anonymous',
-                    messages: [] 
+                    messages: [], 
+                    userCount: 0
     };
   }
 
-  addNewMessage(user, content) {
+  addNewMessage(user, content) { //sends new message to websocket server
     const newMessage = {user, content};
+    newMessage.type = 'message';
     this.socket.send(JSON.stringify(newMessage));
+  }
+
+  changeUsernameHandler(oldUsername, newUsername) {
+    let notification = {};
+    notification.content = `${oldUsername} changed their username to ${newUsername}`;
+    notification.type = 'notification';
+    this.socket.send(JSON.stringify(notification));
   }
 
   
@@ -38,11 +35,15 @@ class App extends Component {
       console.log("Connected to server");
     }
     this.socket.onmessage = (e) => {
-      let messageArray = this.state.messages;
-      let newMessageFromServer = JSON.parse(e.data).message;
-      messageArray.push(newMessageFromServer);
-      this.setState({messages: messageArray});
-      console.log(this.state.messages);
+      let serverMessage = JSON.parse(e.data)
+      if (serverMessage.type === 'clientCount') {
+        this.setState({userCount: serverMessage.numClients});
+      } else {
+        let messageArray = this.state.messages;
+        let newMessageFromServer = serverMessage.message;
+        messageArray.push(newMessageFromServer);
+        this.setState({messages: messageArray});
+      }
     }
   }
 
@@ -56,9 +57,9 @@ class App extends Component {
     console.log("Rendering <App/>");
     return (
       <div>
-        <NavBar />
+        <NavBar userCount={ this.state.userCount }/>
         <MessageList messages={ this.state.messages }/>
-        <ChatBar currentUser={ this.state.currentUser } messages={ this.state.messages } createMessage={this.addNewMessage.bind(this)} />
+        <ChatBar currentUser={ this.state.currentUser } messages={ this.state.messages } createMessage={this.addNewMessage.bind(this)} notifications={this.changeUsernameHandler.bind(this)} />
       </div>
     );
   }

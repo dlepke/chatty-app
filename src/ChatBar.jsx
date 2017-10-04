@@ -17,6 +17,12 @@ class ChatBar extends Component {
     }
   }
 
+  handleOnBlur(event) {
+    const oldUsername = this.props.currentUser;
+    let newUsername = event.target.value;
+    this.props.notifications(oldUsername, newUsername);
+  }
+
   handleUsernameChange(event) {
     this.setState({currentUser: event.target.value});
   }
@@ -32,7 +38,8 @@ class ChatBar extends Component {
         <input className="chatbar-username" 
                placeholder="Your Name (Optional)" 
                value={ this.state.currentUser } 
-               onChange={this.handleUsernameChange.bind(this)} />
+               onChange={this.handleUsernameChange.bind(this)}
+               onBlur={ this.handleOnBlur.bind(this)} />
         <input className="chatbar-message" 
                placeholder="Type a message and hit ENTER" 
                onChange={this.handleContentChange.bind(this)} 
