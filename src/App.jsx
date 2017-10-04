@@ -21,44 +21,35 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {  currentUser: 'Anonymous',
-                    messages: [{
-                      id: 1,
-                      user: 'Bob',
-                      content: 'Has anyone seen my marbles?'
-                    },
-                    {
-                      id: 2,
-                      user: 'Anonymous',
-                      content: 'No, I think you lost them.'
-                    }, 
-                    {
-                      id: 3,
-                      user: 'Anonymous1',
-                      content: "I want to download food."
-                    }] 
+                    messages: [] 
     };
-    this.socket = new WebSocket("ws://localhost:3001");
   }
 
   addNewMessage(user, content) {
-    const newId = this.state.messages.length + 1;
-    const newMessage = {id: newId, user, content};
-    const messages = this.state.messages.concat(newMessage)
-    // Update the state of the app component.
-    // Calling setState will trigger a call to render() in App and all child components.
-    this.setState({messages: messages});
+    const newMessage = {user, content};
+    this.socket.send(JSON.stringify(newMessage));
   }
 
   
   componentDidMount() {
     console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      this.addNewMessage('Michelle', "Hello there!");
-    }, 3000);
+    this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = () => {
       console.log("Connected to server");
-      this.socket.send( this.state.messages );
+    }
+    this.socket.onmessage = (e) => {
+      let messageArray = this.state.messages;
+      let newMessageFromServer = JSON.parse(e.data).message;
+      messageArray.push(newMessageFromServer);
+      this.setState({messages: messageArray});
+      console.log(this.state.messages);
+      console.log("state set with new message");
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.socket) {
+      this.socket.close();
     }
   }
 
