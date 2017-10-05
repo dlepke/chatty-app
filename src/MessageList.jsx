@@ -10,6 +10,7 @@ class MessageList extends Component {
         user={ message.user }
         content={ message.content }
         type={ message.type }
+        currentUserColor={ message.color }
       />
     })
     console.log("Rendering <MessageList />");

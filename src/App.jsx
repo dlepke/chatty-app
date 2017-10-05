@@ -9,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {  currentUser: 'Anonymous',
+                    currentUserColor: '',
                     messages: [], 
                     userCount: 0
     };
@@ -45,9 +46,12 @@ class App extends Component {
       }
       if (serverMessage.type === 'clientCount') {
         this.setState({userCount: serverMessage.numClients});
+        this.setState({currentUserColor: serverMessage.color});
+        console.log(this.state.currentUserColor);
       } else { 
         let messageArray = this.state.messages;
         let newMessageFromServer = serverMessage.message;
+        console.log(newMessageFromServer);
         messageArray.push(newMessageFromServer);
         this.setState({messages: messageArray});
       }
@@ -65,7 +69,7 @@ class App extends Component {
     return (
       <div>
         <NavBar userCount={ this.state.userCount }/>
-        <MessageList messages={ this.state.messages }/>
+        <MessageList messages={ this.state.messages } currentUserColor={ this.state.currentUserColor }/>
         <ChatBar currentUser={ this.state.currentUser } messages={ this.state.messages } createMessage={this.addNewMessage.bind(this)} setNotification={this.setNotification.bind(this)} />
       </div>
     );

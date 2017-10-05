@@ -10,9 +10,12 @@ class Message extends Component {
         </div>
       )
     } else {
+      let fontColor = {
+        color: this.props.currentUserColor,
+      }
       return (
         <div className="message">
-          <span className="message-username">{ this.props.user }</span>
+          <span className="message-username" style={fontColor}>{ this.props.user }</span>
           <span className="message-content">{ this.props.content }</span>
         </div>
       );
