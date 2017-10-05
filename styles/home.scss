@@ -48,7 +48,6 @@ body {
 }
 .message-content,
 .message-username {
-  overflow: hidden;
   margin: 5px;
   padding: 0 10px;
 }
@@ -56,9 +55,9 @@ body {
   flex: 8;
 }
 .message-username {
-  // flex: 2;
   font-weight: 700;
   width: 15%;
+  overflow: hidden;
 }
 
  .navbar {
