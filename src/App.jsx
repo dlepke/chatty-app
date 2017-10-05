@@ -20,8 +20,10 @@ class App extends Component {
     this.socket.send(JSON.stringify(newMessage));
   }
 
-  changeUsernameHandler(oldUsername, newUsername) {
+  setNotification(oldUsername, newUsername) {
     let notification = {};
+    notification.oldUsername = oldUsername;
+    notification.newUsername = newUsername;
     notification.content = `${oldUsername} changed their username to ${newUsername}`;
     notification.type = 'notification';
     this.socket.send(JSON.stringify(notification));
@@ -35,14 +37,19 @@ class App extends Component {
       console.log("Connected to server");
     }
     this.socket.onmessage = (e) => {
-      let serverMessage = JSON.parse(e.data)
-      if (serverMessage.type === 'clientCount') {
-        this.setState({userCount: serverMessage.numClients});
-      } else {
-        let messageArray = this.state.messages;
-        let newMessageFromServer = serverMessage.message;
-        messageArray.push(newMessageFromServer);
-        this.setState({messages: messageArray});
+      let serverMessage = JSON.parse(e.data);
+      if (serverMessage.message) {
+        if (serverMessage.message.type === 'notification') {
+          this.setState({currentUser: serverMessage.message.newUsername});
+        }
+        if (serverMessage.type === 'clientCount') {
+          this.setState({userCount: serverMessage.numClients});
+        } else { 
+          let messageArray = this.state.messages;
+          let newMessageFromServer = serverMessage.message;
+          messageArray.push(newMessageFromServer);
+          this.setState({messages: messageArray});
+        }
       }
     }
   }
@@ -59,7 +66,7 @@ class App extends Component {
       <div>
         <NavBar userCount={ this.state.userCount }/>
         <MessageList messages={ this.state.messages }/>
-        <ChatBar currentUser={ this.state.currentUser } messages={ this.state.messages } createMessage={this.addNewMessage.bind(this)} notifications={this.changeUsernameHandler.bind(this)} />
+        <ChatBar currentUser={ this.state.currentUser } messages={ this.state.messages } createMessage={this.addNewMessage.bind(this)} setNotification={this.setNotification.bind(this)} />
       </div>
     );
   }

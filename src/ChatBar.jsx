@@ -20,7 +20,10 @@ class ChatBar extends Component {
   handleOnBlur(event) {
     const oldUsername = this.props.currentUser;
     let newUsername = event.target.value;
-    this.props.notifications(oldUsername, newUsername);
+    if (oldUsername !== newUsername) {
+      console.log(oldUsername, newUsername);
+      this.props.setNotification(oldUsername, newUsername);
+    }
   }
 
   handleUsernameChange(event) {
