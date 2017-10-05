@@ -13,6 +13,7 @@ class App extends Component {
                     messages: [], 
                     userCount: 0
     };
+    console.log(this.state);
   }
 
   //sends new message to websocket server
@@ -27,8 +28,10 @@ class App extends Component {
     let notification = {};
     notification.oldUsername = oldUsername;
     notification.newUsername = newUsername;
+    console.log(this.state);
     notification.content = `${oldUsername} changed their username to ${newUsername}`;
     notification.type = 'notification';
+    this.setState({currentUser: newUsername});
     this.socket.send(JSON.stringify(notification));
   }
   
@@ -41,11 +44,6 @@ class App extends Component {
     }
     this.socket.onmessage = (e) => {
       let serverMessage = JSON.parse(e.data);
-      if (serverMessage.message) {
-        if (serverMessage.message.type === 'notification') {
-          this.setState({currentUser: serverMessage.message.newUsername});
-        }
-      }
       if (serverMessage.type === 'clientCount') {
         this.setState({userCount: serverMessage.numClients});
         this.setState({currentUserColor: serverMessage.color});
@@ -69,8 +67,12 @@ class App extends Component {
     return (
       <div>
         <NavBar userCount={ this.state.userCount }/>
-        <MessageList messages={ this.state.messages } currentUserColor={ this.state.currentUserColor }/>
-        <ChatBar currentUser={ this.state.currentUser } messages={ this.state.messages } createMessage={this.addNewMessage.bind(this)} setNotification={this.setNotification.bind(this)} />
+        <MessageList messages={ this.state.messages } 
+                     currentUserColor={ this.state.currentUserColor }/>
+        <ChatBar currentUser={ this.state.currentUser } 
+                 messages={ this.state.messages } 
+                 createMessage={this.addNewMessage.bind(this)} 
+                 setNotification={this.setNotification.bind(this)} />
       </div>
     );
   }
