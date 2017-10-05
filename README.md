@@ -6,6 +6,9 @@ SnappyChatty
 * Message with image
 !["Screenshot of Message with Image"](https://github.com/dlepke/chatty-app/blob/master/docs/Screen%20Shot%202017-10-05%20at%2012.32.41%20PM.png)
 
+* Messages from different users with name changes
+!["Screenshot of Message with Image"](https://github.com/dlepke/chatty-app/blob/master/docs/Screen%20Shot%202017-10-05%20at%201.31.03%20PM.png)
+
 
 
 ### Dependencies
