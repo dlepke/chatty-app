@@ -1,45 +1,23 @@
-React Boilerplate
+SnappyChatty
 =====================
 
-A minimal and light dev environment for ReactJS.
+### Final Product
 
-### Usage
+* Message with image
+!["Screenshot of Message with Image"](https://github.com/dlepke/chatty-app/blob/master/docs/Screen%20Shot%202017-10-05%20at%2012.32.41%20PM.png)
 
-Clone the boilerplate and create your own git repo.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
-
-Install the dependencies and start the server.
-
-```
-npm install
-npm start
-open http://localhost:3000
-```
-
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
 
 ### Dependencies
 
+* Express
 * React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* React-DOM
+* WebSockets
+
+# Getting Started
+
+Run npm install to download all necessary dependencies
+* Also required: the chatty-server repo that can be found on my page
+Run the development web server using npm start
+Run the websocket server alongside the dev server, also using npm start in a separate terminal tab/window
