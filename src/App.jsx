@@ -8,20 +8,22 @@ import NavBar from './NavBar.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {  currentUser: 'Anonymous',
-                    currentUserColor: '',
+    this.state = {  currentUser: 'Anonymous', //default username if none entered
+                    currentUserColor: '', //this gets set in websocket server
                     messages: [], 
                     userCount: 0
     };
   }
 
-  addNewMessage(user, content) { //sends new message to websocket server
+  //sends new message to websocket server
+  addNewMessage(user, content) { 
     const newMessage = {user, content};
     newMessage.type = 'message';
     this.socket.send(JSON.stringify(newMessage));
   }
 
-  setNotification(oldUsername, newUsername) {
+  //sends notification message to websocket server
+  setNotification(oldUsername, newUsername) { 
     let notification = {};
     notification.oldUsername = oldUsername;
     notification.newUsername = newUsername;

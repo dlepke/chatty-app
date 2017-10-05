@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class Message extends Component {
   render() {
     console.log("Rendering <Message />");
     if (this.props.type === 'notification') {
       return (
-       <div className="message system">
-          <span>{ this.props.content }</span>
+        <div className="message system">
+          <span>{this.props.content}</span>
         </div>
       )
     } else {
@@ -14,13 +14,14 @@ class Message extends Component {
         color: this.props.currentUserColor,
       }
 
+      //this section detects img urls and renders each message accordingly
       const messageArray = this.props.content.split(' ');
       let firstPart = messageArray;
-      let secondPart =[];
+      let secondPart = [];
       let imgLink = '';
       for (var word in messageArray) {
-        if ((messageArray[word].indexOf('.gif') !== -1) 
-          || (messageArray[word].indexOf('.jpg') !== -1) 
+        if ((messageArray[word].indexOf('.gif') !== -1)
+          || (messageArray[word].indexOf('.jpg') !== -1)
           || (messageArray[word].indexOf('.png') !== -1)) {
           imgLink = messageArray[word];
           firstPart = messageArray.slice(0, word);
@@ -33,17 +34,17 @@ class Message extends Component {
       let messageContent = '';
       if (secondPart.length > 0) {
         messageContent = <div className="message-group">
-                              <span className="message-content">{ processedContent1 }</span> 
-                              <img className="imgInput" src={ imgLink } />
-                              <span className="message-content">{ processedContent2 }</span>
-                          </div>;
+          <span className="message-content">{processedContent1}</span>
+          <img className="imgInput" src={imgLink} />
+          <span className="message-content">{processedContent2}</span>
+        </div>;
       } else {
-        messageContent = <span className="message-content">{ processedContent1 }</span>;
+        messageContent = <span className="message-content">{processedContent1}</span>;
       }
       return (
         <div className="message">
-          <span className="message-username" style={fontColor}>{ this.props.user }</span>
-            { messageContent }
+          <span className="message-username" style={fontColor}>{this.props.user}</span>
+          {messageContent}
         </div>
       );
     }
