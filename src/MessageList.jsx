@@ -13,7 +13,7 @@ class MessageList extends Component {
         currentUserColor={ message.color }
       />
     })
-    console.log("Rendering <MessageList />");
+    //console.log("Rendering <MessageList />");
     return (
       <main className="messages">
         { messages }

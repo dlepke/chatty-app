@@ -29,10 +29,10 @@ class App extends Component {
     notification.type = 'notification';
     this.socket.send(JSON.stringify(notification));
   }
-
+  
   
   componentDidMount() {
-    console.log("componentDidMount <App />");
+    //console.log("componentDidMount <App />");
     this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = () => {
       console.log("Connected to server");
@@ -47,11 +47,9 @@ class App extends Component {
       if (serverMessage.type === 'clientCount') {
         this.setState({userCount: serverMessage.numClients});
         this.setState({currentUserColor: serverMessage.color});
-        console.log(this.state.currentUserColor);
       } else { 
         let messageArray = this.state.messages;
         let newMessageFromServer = serverMessage.message;
-        console.log(newMessageFromServer);
         messageArray.push(newMessageFromServer);
         this.setState({messages: messageArray});
       }
@@ -65,7 +63,7 @@ class App extends Component {
   }
 
   render() {
-    console.log("Rendering <App/>");
+    //console.log("Rendering <App/>");
     return (
       <div>
         <NavBar userCount={ this.state.userCount }/>

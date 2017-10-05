@@ -21,7 +21,6 @@ class ChatBar extends Component {
     const oldUsername = this.props.currentUser;
     let newUsername = event.target.value;
     if (oldUsername !== newUsername) {
-      console.log(oldUsername, newUsername);
       this.props.setNotification(oldUsername, newUsername);
     }
   }
@@ -35,7 +34,7 @@ class ChatBar extends Component {
   }
 
   render() {
-    console.log("Rendering <ChatBar/>");
+    //console.log("Rendering <ChatBar/>");
     return (
       <footer className="chatbar">
         <input className="chatbar-username" 

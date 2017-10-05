@@ -40,6 +40,7 @@ body {
 .message {
   display: flex;
   padding: 5px;
+  justify-content: right;
 }
 .message.system {
   font-style: italic;
@@ -55,8 +56,9 @@ body {
   flex: 8;
 }
 .message-username {
-  flex: 2;
+  // flex: 2;
   font-weight: 700;
+  width: 15%;
 }
 
  .navbar {
@@ -85,4 +87,13 @@ body {
  .user-count-display {
    float: right;
    line-height: 30px;
+ }
+
+ .imgInput {
+   max-width: 60%;
+ }
+
+ .message-group {
+  display: flex;
+  flex-direction: column;
  }
