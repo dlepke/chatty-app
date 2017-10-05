@@ -42,14 +42,14 @@ class App extends Component {
         if (serverMessage.message.type === 'notification') {
           this.setState({currentUser: serverMessage.message.newUsername});
         }
-        if (serverMessage.type === 'clientCount') {
-          this.setState({userCount: serverMessage.numClients});
-        } else { 
-          let messageArray = this.state.messages;
-          let newMessageFromServer = serverMessage.message;
-          messageArray.push(newMessageFromServer);
-          this.setState({messages: messageArray});
-        }
+      }
+      if (serverMessage.type === 'clientCount') {
+        this.setState({userCount: serverMessage.numClients});
+      } else { 
+        let messageArray = this.state.messages;
+        let newMessageFromServer = serverMessage.message;
+        messageArray.push(newMessageFromServer);
+        this.setState({messages: messageArray});
       }
     }
   }
